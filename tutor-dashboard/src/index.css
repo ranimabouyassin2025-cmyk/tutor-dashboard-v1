@@ -83,10 +83,20 @@ a {
   justify-content: space-between;
    
 }
+.student-search{
+  display:flex;
+  flex-wrap:wrap;
+   
+   
+}
+.student-table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
 
 /* Mobile */
-@media (max-width: 798) {
+@media (max-width: 798px) {
 
   .dashboard {
     flex-direction: column;
@@ -105,5 +115,19 @@ a {
     flex-direction: row;
     flex-wrap: wrap;
   }
-
+ .student-table{
+   
+  width: 100%;
+  border-collapse: collapse;
+}
+ .student-header-content{
+  flex-direction: column;
+  flex-wrap: wrap;
+   
+ }
+ .student-search{
+  flex-direction: column;
+   
+  
+ }
 }

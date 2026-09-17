@@ -2,7 +2,7 @@ import React from 'react'
 
 function StudentList() {
   return (
-    <section className='student-table'>
+    <section >
     <table className="student-table">
   <thead>
     <tr>

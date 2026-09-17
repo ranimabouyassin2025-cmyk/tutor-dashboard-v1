@@ -1,4 +1,6 @@
-function StudentSearch() {
+function StudentSearch({search,setSearch,level,setLevel,course,setCourse}) {
+
+  
   return (
     <section className="student-search">
 
@@ -7,20 +9,27 @@ function StudentSearch() {
         type="search"
         id="student-search"
         placeholder="Search for a student"
+        value={search}
+        onChange={(e)=>setSearch(e.target.value)}
       />
 
       <label htmlFor="level-filter">Level</label>
       <select
         id="level-filter"
         className="filter"
-        defaultValue=""
+        defaultValue="All"
+        value={level}
+        onChange={(e)=>setLevel(e.target.value)}
       >
-        <option value="" disabled>
-          Filter by level
-        </option>
+         <option value="All">
+          All
+          </option>
 
         <option value="beginner">
           Beginner
+        </option>
+        <option value="intermediate">
+          Intermediate
         </option>
       </select>
 
@@ -28,14 +37,20 @@ function StudentSearch() {
       <select
         id="course-filter"
         className="filter"
-        defaultValue=""
+        value={course}
+        onChange={(e)=>setCourse(e.target.value)}
+        defaultValue="All"
       >
-        <option value="" disabled>
-          Filter by course
-        </option>
+        
+        <option value="All">
+          All
+          </option>
 
-        <option value="arabic-101">
+        <option value="Arabic 101">
           Arabic 101
+        </option>
+         <option value="Lebanese">
+          Lebanese Arabic
         </option>
       </select>
 

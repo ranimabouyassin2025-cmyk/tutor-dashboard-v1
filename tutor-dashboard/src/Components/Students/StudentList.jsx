@@ -1,35 +1,101 @@
 import React from 'react'
 
-function StudentList() {
-  return (
-    <section >
-    <table className="student-table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Age</th>
-      <th>Course</th>
-      <th>Level</th>
-      <th>Lessons</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
+function StudentList({ search, level, course }) {
+  const students = [
+    {
+      id: 1,
+      name: 'Ali and Hassan',
+      age: 12,
+      country: 'France',
+      course: 'Arabic 101',
+      level: 'beginner',
+      lessons: 40
+    },
+    {
+      id: 2,
+      name: 'Bady',
+      age: 28,
+      country: 'Brazil',
+      course: 'Arabic 101',
+      level: 'intermediate',
+      lessons: 30
+    },
+    {
+      id: 3,
+      name: 'Rahul',
+      age: 43,
+      country: 'India',
+      course: 'Arabic 101',
+      level: 'intermediate',
+      lessons: 20
+    },
+      {
+      id: 4,
+      name: 'Elwira',
+      age: 43,
+      country: 'Belgium',
+      course: 'Lebanese',
+      level: 'intermediate',
+      lessons: 20
+    }
+  ]
+  
+  const filteredStudents = students.filter((item) => {
 
-  <tbody>
-    <tr>
-      <td>Ali Hassan</td>
-      <td>10</td>
-      <td>Arabic 101</td>
-      <td>Beginner</td>
-      <td>12</td>
-      <td>
-        <button>Edit</button>
-        <button>Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-    </section>
+  
+    const matchesSearch =
+      item.name.toLowerCase().includes(search.toLowerCase())
+    
+    const matchesLevel =
+      level === "All" || item.level === level
+
+    const matchesCourse =
+      course === "All" || item.course === course
+
+      
+
+    return matchesSearch && matchesLevel && matchesCourse  
+ } )
+
+  return (
+    <div className="student-list">
+      <table className="student-table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Age</th>
+            <th scope="col">Course</th>
+            <th scope="col">Level</th>
+            <th scope="col">Lessons</th>
+            <th scope="col">Country</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {filteredStudents.length > 0 ? (
+            filteredStudents.map((item) => (
+              <tr key={item.id}>
+                <td>{item.name}</td>
+                <td>{item.age}</td>
+                <td>{item.course}</td>
+                <td>{item.level}</td>
+                <td>{item.lessons}</td>
+                <td>{item.country}</td>
+                <td>
+                  <button type="button">Edit</button>
+                  <button type="button">Delete</button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="7">No students found</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
   )
 }
 

@@ -1,7 +1,8 @@
 import React from 'react'
 
-function StudentList({ search, level, course,students }) {
+function StudentList({ search, level, course,students,Delete,Edit,addStudent }) {
    
+
   const filteredStudents = students.filter((item) => {
 
  
@@ -34,6 +35,7 @@ function StudentList({ search, level, course,students }) {
             <th scope="col">Actions</th>
           </tr>
         </thead>
+         
 
         <tbody>
           {filteredStudents.length > 0 ? (
@@ -46,8 +48,8 @@ function StudentList({ search, level, course,students }) {
                 <td>{item.lessons}</td>
                 <td>{item.country}</td>
                 <td>
-                  <button type="button" >Edit</button>
-                  <button type="button" >Delete</button>
+                  <button type="button" onClick={()=>Edit(item.id)} >Edit</button>
+                  <button type="button" onClick={()=>Delete(item.id)}>Delete</button>
                 </td>
               </tr>
             ))
@@ -57,6 +59,8 @@ function StudentList({ search, level, course,students }) {
             </tr>
           )}
         </tbody>
+        <button onClick={addStudent}>Add</button>
+        
       </table>
     </div>
   )

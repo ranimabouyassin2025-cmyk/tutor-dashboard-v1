@@ -6,6 +6,7 @@
   import StudentPage from './Components/Students/StudentPage.jsx';  
  function App() {
    return ( <> 
+    
      <StudentPage/>
       </>
    )

@@ -1,48 +1,10 @@
 import React from 'react'
 
-function StudentList({ search, level, course }) {
-  const students = [
-    {
-      id: 1,
-      name: 'Ali and Hassan',
-      age: 12,
-      country: 'France',
-      course: 'Arabic 101',
-      level: 'beginner',
-      lessons: 40
-    },
-    {
-      id: 2,
-      name: 'Bady',
-      age: 28,
-      country: 'Brazil',
-      course: 'Arabic 101',
-      level: 'intermediate',
-      lessons: 30
-    },
-    {
-      id: 3,
-      name: 'Rahul',
-      age: 43,
-      country: 'India',
-      course: 'Arabic 101',
-      level: 'intermediate',
-      lessons: 20
-    },
-      {
-      id: 4,
-      name: 'Elwira',
-      age: 43,
-      country: 'Belgium',
-      course: 'Lebanese',
-      level: 'intermediate',
-      lessons: 20
-    }
-  ]
-  
+function StudentList({ search, level, course,students }) {
+   
   const filteredStudents = students.filter((item) => {
 
-  
+ 
     const matchesSearch =
       item.name.toLowerCase().includes(search.toLowerCase())
     
@@ -56,6 +18,7 @@ function StudentList({ search, level, course }) {
 
     return matchesSearch && matchesLevel && matchesCourse  
  } )
+ 
 
   return (
     <div className="student-list">
@@ -83,8 +46,8 @@ function StudentList({ search, level, course }) {
                 <td>{item.lessons}</td>
                 <td>{item.country}</td>
                 <td>
-                  <button type="button">Edit</button>
-                  <button type="button">Delete</button>
+                  <button type="button" >Edit</button>
+                  <button type="button" >Delete</button>
                 </td>
               </tr>
             ))

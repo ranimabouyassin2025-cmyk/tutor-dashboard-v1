@@ -1,6 +1,6 @@
 import React from 'react'
 
-function StudentList({ search, level, course,students,Delete,Edit,addStudent }) {
+function StudentList({ search, level, course,students,onDelete,onEdit,addStudent }) {
    
 
   const filteredStudents = students.filter((item) => {
@@ -26,6 +26,7 @@ function StudentList({ search, level, course,students,Delete,Edit,addStudent }) 
       <table className="student-table">
         <thead>
           <tr>
+            <th scop="col">Id</th>
             <th scope="col">Name</th>
             <th scope="col">Age</th>
             <th scope="col">Course</th>
@@ -41,6 +42,7 @@ function StudentList({ search, level, course,students,Delete,Edit,addStudent }) 
           {filteredStudents.length > 0 ? (
             filteredStudents.map((item) => (
               <tr key={item.id}>
+                <td>{item.id}</td>
                 <td>{item.name}</td>
                 <td>{item.age}</td>
                 <td>{item.course}</td>
@@ -48,8 +50,8 @@ function StudentList({ search, level, course,students,Delete,Edit,addStudent }) 
                 <td>{item.lessons}</td>
                 <td>{item.country}</td>
                 <td>
-                  <button type="button" onClick={()=>Edit(item.id)} >Edit</button>
-                  <button type="button" onClick={()=>Delete(item.id)}>Delete</button>
+                  <button type="button" onClick={()=>onEdit(item.id)} >Edit</button>
+                  <button type="button" onClick={()=>onDelete(item.id)}>Delete</button>
                 </td>
               </tr>
             ))

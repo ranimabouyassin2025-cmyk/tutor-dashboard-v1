@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import StudentSearch from "./StudentSearch";
 import StudentList from "./StudentList";
 import StudentForm from "./StudentForm";
@@ -10,7 +10,9 @@ function StudentPage() {
   const [search, setSearch] = useState("");
   const [level, setLevel] = useState("All");
   const [course, setCourse] = useState("All");
-  const [students, setStudents] = useState([
+  const savedStudents=localStorage.getItem("students")
+   
+  const defaultStudents=[
     {
       id: 1,
       name: "Ali and Hassan",
@@ -47,7 +49,8 @@ function StudentPage() {
       level: "intermediate",
       lessons: 20,
     },
-  ]);
+  ];
+  const [students, setStudents] = useState(savedStudents?JSON.parse(savedStudents):defaultStudents)
   const [editingStudent, setEditingStudent] = useState(null);
   const [formMode, setformMode] = useState(null);
   function deleteStudent(id) {
@@ -90,9 +93,9 @@ function StudentPage() {
       id: null,
       name: "",
       age: "",
-      country: "",
-      course: "",
-      level: "",
+      country: "France",
+      course: "Arabic 101",
+      level: "beginner",
       lessons: 0,
     };
 
@@ -120,7 +123,7 @@ function StudentPage() {
   else if (formMode === "Add") {
     const newStudent = {
       ...editingStudent,
-      id: Math.max(...students.map((student) => student.id)) + 1,
+      id:  students.length===0?1:Math.max(...students.map((student) => student.id)) + 1
     };
 
     setStudents((prev) => [
@@ -132,6 +135,11 @@ function StudentPage() {
   setEditingStudent(null);
   setformMode(null);
 }
+ 
+useEffect(() => {
+  localStorage.setItem("students", JSON.stringify(students));
+}, [students]);
+
 
   return (
     <>
@@ -148,8 +156,8 @@ function StudentPage() {
         level={level}
         course={course}
         students={students}
-        Delete={deleteStudent}
-        Edit={editStudent}
+        onDelete={deleteStudent}
+        onEdit={editStudent}
         addStudent={addStudent}
          
       />
@@ -165,8 +173,8 @@ function StudentPage() {
           handleCourse={handleCourse}
           handleLesson={handleLesson}
           handleLevel={handleLevel}
-          Save={saveStudent}
-          Cancel={cancelForm}
+          onSave={saveStudent}
+          onCancel={cancelForm}
         />
       )}
     </>

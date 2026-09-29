@@ -1,62 +1,23 @@
-import React, { useState,useEffect } from "react";
+import { useState } from "react";
 import StudentSearch from "./StudentSearch";
 import StudentList from "./StudentList";
 import StudentForm from "./StudentForm";
 
-function StudentPage() {
+function StudentPage({ students, setStudents, completedLessons,lessons,setLessons }) {
   const optionLevels = ["beginner", "intermediate", "fluent"];
   const optionCourses = ["Arabic 101", "Lebanese"];
   const optionCountries = ["France", "Brazil", "India", "Belgium"];
   const [search, setSearch] = useState("");
   const [level, setLevel] = useState("All");
   const [course, setCourse] = useState("All");
-  const savedStudents=localStorage.getItem("students")
    
-  const defaultStudents=[
-    {
-      id: 1,
-      name: "Ali and Hassan",
-      age: 12,
-      country: "France",
-      course: "Arabic 101",
-      level: "beginner",
-      lessons: 40,
-    },
-    {
-      id: 2,
-      name: "Bady",
-      age: 28,
-      country: "Brazil",
-      course: "Arabic 101",
-      level: "intermediate",
-      lessons: 30,
-    },
-    {
-      id: 3,
-      name: "Rahul",
-      age: 43,
-      country: "India",
-      course: "Arabic 101",
-      level: "intermediate",
-      lessons: 20,
-    },
-    {
-      id: 4,
-      name: "Elwira",
-      age: 43,
-      country: "Belgium",
-      course: "Lebanese",
-      level: "intermediate",
-      lessons: 20,
-    },
-  ];
-  const [students, setStudents] = useState(savedStudents?JSON.parse(savedStudents):defaultStudents)
   const [editingStudent, setEditingStudent] = useState(null);
   const [formMode, setformMode] = useState(null);
   function deleteStudent(id) {
     setStudents((prevStudents) =>
       prevStudents.filter((student) => student.id !== id),
     );
+    setLessons((prevLessons)=>prevLessons.filter((lesson)=>lesson.studentId!==id))
   }
   function editStudent(id) {
     const selectedStudent = students.find((student) => student.id === id);
@@ -64,7 +25,7 @@ function StudentPage() {
     setEditingStudent(selectedStudent);
     setformMode("Edit");
   }
-  function handleName(name) {
+  function handleName(name) { 
     setEditingStudent((prev) => ({
       ...prev,
       name: name,
@@ -85,8 +46,8 @@ function StudentPage() {
   function handleLevel(level) {
     setEditingStudent((prev) => ({ ...prev, level: level }));
   }
-  function handleLesson(lessons) {
-    setEditingStudent((prev) => ({ ...prev, lessons: lessons }));
+  function handlePurchasedLessons(purchasedLessons) {
+    setEditingStudent((prev) => ({ ...prev, purchasedLessons: purchasedLessons }));
   }
   function addStudent() {
     const newStudent = {
@@ -96,7 +57,7 @@ function StudentPage() {
       country: "France",
       course: "Arabic 101",
       level: "beginner",
-      lessons: 0,
+      purchasedLessons: 0,
     };
 
     setEditingStudent(newStudent);
@@ -123,6 +84,7 @@ function StudentPage() {
   else if (formMode === "Add") {
     const newStudent = {
       ...editingStudent,
+
       id:  students.length===0?1:Math.max(...students.map((student) => student.id)) + 1
     };
 
@@ -136,11 +98,6 @@ function StudentPage() {
   setformMode(null);
 }
  
-useEffect(() => {
-  localStorage.setItem("students", JSON.stringify(students));
-}, [students]);
-
-
   return (
     <>
       <StudentSearch
@@ -156,6 +113,7 @@ useEffect(() => {
         level={level}
         course={course}
         students={students}
+        completedLessons={completedLessons}
         onDelete={deleteStudent}
         onEdit={editStudent}
         addStudent={addStudent}
@@ -171,7 +129,7 @@ useEffect(() => {
           handleAge={handleAge}
           handleCountry={handleCountry}
           handleCourse={handleCourse}
-          handleLesson={handleLesson}
+          handlePurchasedLessons={handlePurchasedLessons}
           handleLevel={handleLevel}
           onSave={saveStudent}
           onCancel={cancelForm}

@@ -1,6 +1,4 @@
-import React from 'react'
-
-function StudentList({ search, level, course,students,onDelete,onEdit,addStudent }) {
+function StudentList({ search, level, course, students, completedLessons, onDelete, onEdit, addStudent }) {
    
 
   const filteredStudents = students.filter((item) => {
@@ -23,47 +21,52 @@ function StudentList({ search, level, course,students,onDelete,onEdit,addStudent
 
   return (
     <div className="student-list">
-      <table className="student-table">
-        <thead>
-          <tr>
-            <th scop="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Age</th>
-            <th scope="col">Course</th>
-            <th scope="col">Level</th>
-            <th scope="col">Lessons</th>
-            <th scope="col">Country</th>
-            <th scope="col">Actions</th>
+      <table className="data-table student-table">
+        <thead className="data-table__head">
+          <tr className="data-table__row">
+            <th className="data-table__heading" scope="col">Id</th>
+            <th className="data-table__heading" scope="col">Name</th>
+            <th className="data-table__heading" scope="col">Age</th>
+            <th className="data-table__heading" scope="col">Course</th>
+            <th className="data-table__heading" scope="col">Level</th>
+            <th className="data-table__heading" scope="col">Purchased classes</th>
+            <th className="data-table__heading" scope="col">Completed classes</th>
+            <th className="data-table__heading" scope="col">Country</th>
+            <th className="data-table__heading" scope="col">Actions</th>
           </tr>
         </thead>
          
 
-        <tbody>
+        <tbody className="data-table__body">
           {filteredStudents.length > 0 ? (
             filteredStudents.map((item) => (
-              <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.age}</td>
-                <td>{item.course}</td>
-                <td>{item.level}</td>
-                <td>{item.lessons}</td>
-                <td>{item.country}</td>
-                <td>
-                  <button type="button" onClick={()=>onEdit(item.id)} >Edit</button>
-                  <button type="button" onClick={()=>onDelete(item.id)}>Delete</button>
+              <tr className="data-table__row" key={item.id}>
+                <td className="data-table__cell">{item.id}</td>
+                <td className="data-table__cell">{item.name}</td>
+                <td className="data-table__cell">{item.age}</td>
+                <td className="data-table__cell">{item.course}</td>
+                <td className="data-table__cell">{item.level}</td>
+                <td className="data-table__cell">{item.purchasedLessons}</td>
+                <td className="data-table__cell">
+                  {completedLessons.filter((lesson) => String(lesson.studentId) === String(item.id)).length}
+                </td>
+                <td className="data-table__cell">{item.country}</td>
+                <td className="data-table__actions">
+                  <button className="button button--secondary" type="button" onClick={()=>onEdit(item.id)} >Edit</button>
+                  <button className="button button--danger" type="button" onClick={()=>onDelete(item.id)}>Delete</button>
                 </td>
               </tr>
             ))
           ) : (
-            <tr>
-              <td colSpan="7">No students found</td>
+            <tr className="data-table__row">
+              <td className="data-table__empty" colSpan="9">No students found</td>
             </tr>
           )}
         </tbody>
-        <button onClick={addStudent}>Add</button>
-        
       </table>
+      <div className="student-list__actions">
+        <button className="button button--primary" type="button" onClick={addStudent}>Add</button>
+      </div>
     </div>
   )
 }
